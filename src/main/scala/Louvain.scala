@@ -303,11 +303,19 @@ class Louvain() extends Serializable{
       })
 
     val actualQ = newVertices.values.reduce(_ + _)
-
-    // return the modularity value of the graph along with the
-    // graph. vertices are labeled with their community
-    (actualQ, louvainGraph, count / 2)
-
+    
+    if(! newVertices.isEmpty()) {
+      // return the modularity value of the graph along with the
+      // graph. vertices are labeled with their community
+      val actualQ = newVertices.values.reduce(_ + _)
+      (actualQ, louvainGraph, count / 2)
+    }
+    else {
+      // return the modularity value of the graph along with the
+      // graph. vertices are labeled with their community
+      val actualQ = 0
+      (actualQ, louvainGraph, count / 2)
+    }
   }
 
   def compressGraph(graph: Graph[LouvainData, Long], debug: Boolean = true): Graph[LouvainData, Long] = {
